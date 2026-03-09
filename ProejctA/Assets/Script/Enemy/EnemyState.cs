@@ -22,6 +22,7 @@ namespace ProjectA.Enemy
         public float attackRate;
         public float attackSpeed;
 
+
     }
 
 }

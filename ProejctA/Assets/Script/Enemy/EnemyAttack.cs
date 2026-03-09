@@ -4,20 +4,21 @@ namespace ProjectA.Enemy
 {
     public class EnemyAttack : MonoBehaviour
     {
-
+        Enemy m_Enemy;
         EnemyState m_State;
         EnemyMovement m_Movement;
-        EnemyAnimation m_Animation;
 
         public LayerMask WallLayer;
 
         bool isAttack;
 
-        public void AttackInit(EnemyState m_State)
+        public void Init(Enemy m_Enemy, EnemyState m_State)
         {
+            this.m_Enemy = m_Enemy;
             this.m_State = m_State;
+
             m_Movement = GetComponent<EnemyMovement>();
-            m_Animation = GetComponent<EnemyAnimation>();
+        
         }
 
         private void FixedUpdate()
@@ -32,13 +33,13 @@ namespace ProjectA.Enemy
             RaycastHit2D hit = Physics2D.Raycast(
                 transform.position,
                 Vector2.down,
-                m_State.attackRange,
+                (m_State.attackRange * 0.01f),
                 WallLayer
             );
 
             Debug.DrawRay(
                 transform.position,
-                Vector2.down * m_State.attackRange,
+                Vector2.down * (m_State.attackRange * 0.01f),
                 Color.red
             );
 
@@ -47,6 +48,7 @@ namespace ProjectA.Enemy
                 if(!isAttack)
                 {
                     StartAttack();
+
                 }
             }
             else
@@ -62,7 +64,7 @@ namespace ProjectA.Enemy
         {
             Debug.Log("Start Attack!");
             isAttack = true;
-            m_Animation.IsAttack();
+            m_Enemy.m_Animation.PlayAttack();
             m_Movement.StopMove();
         }
 
@@ -71,6 +73,21 @@ namespace ProjectA.Enemy
             Debug.Log("Stop Attack!");
             isAttack = false;
             m_Movement.ResumeMove();
+        }
+
+        public void AttackHit()
+        {
+            GameManager.instance.m_Wall.TakeDamage(m_State.attackPower);
+        }
+
+        public void Shootting()
+        {
+            GameObject bullet = GameManager.instance.BulletPool.Get(m_Enemy.Data.bulletPrefab);
+
+            bullet.transform.position = transform.position;
+            bullet.transform.rotation = transform.rotation;
+
+            bullet.GetComponent<EnemyBullet>().Init(m_State.attackPower, m_State.attackSpeed);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace ProjectA.Enemy
         void Spawn()
         {
 
-            GameObject enemy = GameManager.instance.enemyPool.Get(0);
+            GameObject enemy = GameManager.instance.EnemyPool.Get(0);
 
             enemy.transform.position = m_spawnPoint[Random.Range(1, m_spawnPoint.Length)].position;
 

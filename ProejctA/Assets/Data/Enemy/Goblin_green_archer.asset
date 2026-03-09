@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b6f79d108241df49b4b3f0b5031717d, type: 3}
-  m_Name: Slime_Green
+  m_Name: Goblin_green_archer
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyName: Slime_green
-  graphicsPrefab: {fileID: 3934881310097623999, guid: e55240205d7eb7040abc1e2aa487f0fa, type: 3}
+  enemyName: Goblin_green_archer
+  graphicsPrefab: {fileID: 1682409507242354609, guid: e17b7234e0a788546882dd8f266cac1c, type: 3}
   maxHealth: 100
   moveSpeed: 2
-  attackRange: 30
+  attackRange: 100
   attackPower: 1
   attackRate: 10
-  attackSpeed: 10
+  attackSpeed: 1
+  bulletPrefab: {fileID: 2129811195098632115, guid: e1bb3a64b90bb7e419ae126c0c7694fa, type: 3}

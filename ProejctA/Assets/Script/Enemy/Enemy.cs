@@ -4,17 +4,27 @@ namespace ProjectA.Enemy
 {
     public class Enemy : MonoBehaviour
     {
-        [SerializeField]
-        EnemyState m_State;
+        [SerializeField]Transform graphicsRoot;
 
-        [SerializeField]
-        private EnemyData m_Data;
+        [SerializeField] EnemyData m_Data;
 
-        EnemyMovement m_Movement;
-        EnemyAttack m_Attack;
+        [SerializeField] EnemyState m_State;
+
+        public EnemyMovement m_Movement { get; private set; }
+        public EnemyAttack m_Attack { get; private set; }
+        public EnemyAnimation m_Animation { get; private set; }
+
+
+        private GameObject graphics;
+
+        public EnemyData Data => m_Data;
 
         public void Init(EnemyData data)
         {
+            graphics = Instantiate(data.graphicsPrefab, graphicsRoot);
+
+            m_Animation = graphics.GetComponent<EnemyAnimation>();
+
             m_Data = data;
             m_State = new EnemyState
             {
@@ -28,11 +38,20 @@ namespace ProjectA.Enemy
                 attackSpeed = data.attackSpeed,
             };
 
-            m_Movement = GetComponent<EnemyMovement>();
-            m_Movement.MovementInit(m_State);
 
+            if (transform.position.x > 0)
+            {
+                Vector3 scale = graphicsRoot.localScale;
+                scale.x = -1;
+                graphicsRoot.localScale = scale;
+            }
+
+            m_Movement = GetComponent<EnemyMovement>();
             m_Attack = GetComponent<EnemyAttack>();
-            m_Attack.AttackInit(m_State);
+
+            m_Movement.Init(this, m_State);
+            m_Attack.Init(this, m_State);
+            m_Animation.Init(this);
 
         }
     }

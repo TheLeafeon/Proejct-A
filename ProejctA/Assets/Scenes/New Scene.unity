@@ -130,9 +130,10 @@ GameObject:
   - component: {fileID: 38229845}
   - component: {fileID: 38229844}
   - component: {fileID: 38229846}
+  - component: {fileID: 38229847}
   m_Layer: 6
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -240,7 +241,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -256,6 +257,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &38229847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38229843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf20728b7bd17e4fb4d5e0167f826f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wall
+  wallHp: 3000
 --- !u!1 &75923252
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +332,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 360858903}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &263654639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 263654641}
+  - component: {fileID: 263654642}
+  m_Layer: 0
+  m_Name: BulletPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &263654641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263654639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.12152, y: 1.19395, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &263654642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263654639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89b03e174359e4f4ca8cccd5018d8cfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectA.Core.BulletPool
 --- !u!1 &360858901
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectA.Enemy.Spawner
   m_spawnPoint: []
-  m_data: {fileID: 11400000, guid: eb3cfb39307fa304fbbd0322eea1128a, type: 2}
+  m_data: {fileID: 11400000, guid: 22ea1f0d9e483024a99653e1f7e6ec11, type: 2}
 --- !u!1 &368355579
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,7 +532,7 @@ GameObject:
   - component: {fileID: 587365041}
   - component: {fileID: 587365040}
   m_Layer: 0
-  m_Name: Pool Manager
+  m_Name: EnemyPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -493,7 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectA.Core.PoolManager
   prefabs:
-  - {fileID: 5650277218213896882, guid: f560ccd85b0cf234ab1b971c7d36cc0b, type: 3}
+  - {fileID: 4712498773002577986, guid: df0c9dae419fac24daf87a8b34459be1, type: 3}
 --- !u!4 &587365041
 Transform:
   m_ObjectHideFlags: 0
@@ -538,7 +596,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d427264f43e594792def8b14fdaadb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  enemyPool: {fileID: 587365040}
+  EnemyPool: {fileID: 587365040}
+  BulletPool: {fileID: 263654642}
+  m_Wall: {fileID: 38229847}
 --- !u!4 &787129669
 Transform:
   m_ObjectHideFlags: 0
@@ -715,7 +775,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 000000003b82b667c957d6c62f80047481a9ac0a9140b3b7
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -967,7 +1027,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 1855137154}
   - {fileID: 1456758943}
-  - {fileID: 360858903}
   - {fileID: 787129669}
   - {fileID: 587365041}
+  - {fileID: 263654641}
+  - {fileID: 360858903}
   - {fileID: 38229845}

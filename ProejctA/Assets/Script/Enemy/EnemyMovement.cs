@@ -4,15 +4,15 @@ namespace ProjectA.Enemy
 {
     public class EnemyMovement : MonoBehaviour
     {
+        Enemy m_Enemy;
         EnemyState m_State;
 
         bool isStop;
-        EnemyAnimation m_Animation;
 
-        public void MovementInit(EnemyState m_State)
+        public void Init(Enemy m_Enemy, EnemyState m_State)
         {
+            this.m_Enemy = m_Enemy;
             this.m_State = m_State;
-            m_Animation = GetComponent<EnemyAnimation>();
         }
 
         private void FixedUpdate()
@@ -25,6 +25,8 @@ namespace ProjectA.Enemy
         void Move()
         {
             transform.position += Vector3.down * m_State.moveSpeed * Time.deltaTime;
+
+            m_Enemy.m_Animation.PlayMove();
         }
 
         public void StopMove()
@@ -34,7 +36,7 @@ namespace ProjectA.Enemy
         public void ResumeMove()
         {
             isStop = false;
-            m_Animation.IsMove();
+            m_Enemy.m_Animation.PlayMove();
         }
     }
 }
